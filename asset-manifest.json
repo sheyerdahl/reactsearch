@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/reactsearch/static/css/main.022bb085.css",
+    "main.js": "/reactsearch/static/js/main.85d531a1.js",
+    "static/js/787.deba3793.chunk.js": "/reactsearch/static/js/787.deba3793.chunk.js",
+    "static/media/SEGA.woff": "/reactsearch/static/media/SEGA.47b4bfa94ef243af4a5b.woff",
+    "index.html": "/reactsearch/index.html",
+    "main.022bb085.css.map": "/reactsearch/static/css/main.022bb085.css.map",
+    "main.85d531a1.js.map": "/reactsearch/static/js/main.85d531a1.js.map",
+    "787.deba3793.chunk.js.map": "/reactsearch/static/js/787.deba3793.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.022bb085.css",
+    "static/js/main.85d531a1.js"
+  ]
+}
