@@ -2,7 +2,9 @@ import React from "react";
 import Card from "./Card";
 
 const CardList = ({info}) => {
-    return (
+    return info.length === 0 ?
+    <h1>Loading</h1> :
+    (
         <div>
             {
                 info.map((user, i) => {

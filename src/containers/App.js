@@ -30,9 +30,7 @@ class App extends React.Component {
         const filteredCats = info.filter(catInfo => {
             return catInfo.username.toLowerCase().includes(searchfield.toLowerCase())
         })
-        return (info.length === 0) ?
-            <h1>Loading</h1> :
-             (
+        return (
                 <div className="tc">
                     <h1 className="f1">React Search</h1>
                     <SearchBox searchChange={this.handleSearch}/>
