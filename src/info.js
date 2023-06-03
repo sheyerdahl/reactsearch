@@ -1,4 +1,4 @@
-export const info = [
+export const offlineInfo = [
     {
         id: 1,
         name: "Cat 1",

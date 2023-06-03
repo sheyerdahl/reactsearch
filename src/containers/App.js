@@ -4,6 +4,7 @@ import SearchBox from "../components/SearchBox";
 import Scroll from "../components/Scroll";
 import ErrorBoundry from "../components/ErrorBoundry"
 import "./App.css";
+import {offlineInfo} from "../info.js"
 
 
 class App extends React.Component {
@@ -12,6 +13,7 @@ class App extends React.Component {
         this.state = {
             info: [],
             searchfield: "",
+            usersTimedOut: false,
         }
     }
 
@@ -19,6 +21,14 @@ class App extends React.Component {
         fetch("https://jsonplaceholder.typicode.com/users")
         .then(response => response.json())
         .then(users => this.setState({info: users}))
+        setTimeout(() => {
+            if (this.state.info.length === 0) {
+                this.setState({usersTimedOut: true})
+                setTimeout(() => {
+                    this.setState({info: offlineInfo})
+                }, 1500)
+            }
+        }, 4000)
     }
 
     handleSearch = (event) => {
@@ -26,7 +36,7 @@ class App extends React.Component {
     }
 
     render() {
-        const {info, searchfield} = this.state;
+        const {info, searchfield, usersTimedOut} = this.state;
         const filteredCats = info.filter(catInfo => {
             return catInfo.username.toLowerCase().includes(searchfield.toLowerCase())
         })
@@ -36,7 +46,7 @@ class App extends React.Component {
                     <SearchBox searchChange={this.handleSearch}/>
                     <Scroll>
                         <ErrorBoundry>
-                            <CardList info={filteredCats}/>
+                            <CardList info={filteredCats} usersTimedOut={usersTimedOut}/>
                         </ErrorBoundry>
                     </Scroll>
                 </div>
