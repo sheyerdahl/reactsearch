@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import CardList from "../components/CardList";
 import SearchBox from "../components/SearchBox";
 import Scroll from "../components/Scroll";
@@ -7,51 +7,49 @@ import "./App.css";
 import {offlineInfo} from "../info.js"
 
 
-class App extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            info: [],
-            searchfield: "",
-            usersTimedOut: false,
-        }
-    }
+function App() {
+    const [info, setInfo] = useState([])
+    const [searchfield, setSearchfield] = useState("")
+    const [usersTimedOut, setUsersTimedOut] = useState(false)
 
-    componentDidMount() {
+    useEffect(() => {
+        let newInfo = []
         fetch("https://jsonplaceholder.typicode.com/users")
-        .then(response => response.json())
-        .then(users => this.setState({info: users}))
+            .then(response => response.json())
+            .then(users => {
+                setInfo(users);
+                newInfo = users
+            })
+
         setTimeout(() => {
-            if (this.state.info.length === 0) {
-                this.setState({usersTimedOut: true})
+            if (newInfo.length === 0) {
+                setUsersTimedOut(true)
                 setTimeout(() => {
-                    this.setState({info: offlineInfo})
+                    setInfo(offlineInfo)
                 }, 1500)
             }
         }, 4000)
-    }
+    }, [])
 
-    handleSearch = (event) => {
-        this.setState({searchfield: event.target.value})
+    const handleSearch = (event) => {
+        setSearchfield(event.target.value)
     }
+    
+    const filteredCats = info.filter(catInfo => {
+        return catInfo.username.toLowerCase().includes(searchfield.toLowerCase())
+    })
 
-    render() {
-        const {info, searchfield, usersTimedOut} = this.state;
-        const filteredCats = info.filter(catInfo => {
-            return catInfo.username.toLowerCase().includes(searchfield.toLowerCase())
-        })
-        return (
-                <div className="tc">
-                    <h1 className="f1">React Search</h1>
-                    <SearchBox searchChange={this.handleSearch}/>
-                    <Scroll>
-                        <ErrorBoundry>
-                            <CardList info={filteredCats} usersTimedOut={usersTimedOut}/>
-                        </ErrorBoundry>
-                    </Scroll>
-                </div>
-            );
-    }
+    return (
+            <div className="tc">
+                <h1 className="f1">React Search</h1>
+                <SearchBox searchChange={handleSearch}/>
+                <Scroll>
+                    <ErrorBoundry>
+                        <CardList info={filteredCats} usersTimedOut={usersTimedOut}/>
+                    </ErrorBoundry>
+                </Scroll>
+            </div>
+        );
 }
 
 export default App;
