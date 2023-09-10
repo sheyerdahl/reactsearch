@@ -1,42 +1,65 @@
-import React, {useState, useEffect} from "react";
+// import React, {useState, useEffect} from "react";
+import React, { useEffect} from "react";
+import { connect } from "react-redux";
 import CardList from "../components/CardList";
 import SearchBox from "../components/SearchBox";
 import Scroll from "../components/Scroll";
-import ErrorBoundry from "../components/ErrorBoundry"
+import ErrorBoundry from "../components/ErrorBoundry";
 import "./App.css";
-import {offlineInfo} from "../info.js"
+//import {offlineInfo} from "../info.js";
 
+import { setSearchField, requestCats } from "../actions";
 
-function App() {
-    const [info, setInfo] = useState([])
-    const [searchfield, setSearchfield] = useState("")
-    const [usersTimedOut, setUsersTimedOut] = useState(false)
+const mapStateToProps = state => {
+    return {
+        searchField: state.searchCats.searchField,
+        cats: state.requestCats.cats,
+        isPending: state.requestCats.isPending,
+        error: state.requestCats.error
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleSearch: (event) => dispatch(setSearchField(event.target.value)),
+        handleRequestCats: () => dispatch(requestCats)
+    }
+}
+
+function App(store) {
+    // const [info, setInfo] = useState([])
+    // const [searchfield, setSearchfield] = useState("")
+    // const [usersTimedOut, setUsersTimedOut] = useState(false)
+
+    const { searchField, cats, handleSearch, handleRequestCats } = store
 
     useEffect(() => {
-        let newInfo = []
-        fetch("https://jsonplaceholder.typicode.com/users")
-            .then(response => response.json())
-            .then(users => {
-                setInfo(users);
-                newInfo = users
-            })
+        handleRequestCats();
 
-        setTimeout(() => {
-            if (newInfo.length === 0) {
-                setUsersTimedOut(true)
-                setTimeout(() => {
-                    setInfo(offlineInfo)
-                }, 1500)
-            }
-        }, 4000)
-    }, [])
+        // let newInfo = []
+        // fetch("https://jsonplaceholder.typicode.com/users")
+        //     .then(response => response.json())
+        //     .then(users => {
+        //         setInfo(users);
+        //         newInfo = users
+        //     })
 
-    const handleSearch = (event) => {
-        setSearchfield(event.target.value)
-    }
-    
-    const filteredCats = info.filter(catInfo => {
-        return catInfo.username.toLowerCase().includes(searchfield.toLowerCase())
+        // setTimeout(() => {
+        //     if (newInfo.length === 0) {
+        //         setUsersTimedOut(true)
+        //         setTimeout(() => {
+        //             setInfo(offlineInfo)
+        //         }, 1500)
+        //     }
+        // }, 4000)
+    }, [handleRequestCats])
+
+    // const handleSearch = (event) => {
+    //     setSearchfield(event.target.value)
+    // }
+
+    const filteredCats = cats.filter(catInfo => {
+        return catInfo.username.toLowerCase().includes(searchField.toLowerCase())
     })
 
     return (
@@ -45,11 +68,12 @@ function App() {
                 <SearchBox searchChange={handleSearch}/>
                 <Scroll>
                     <ErrorBoundry>
-                        <CardList info={filteredCats} usersTimedOut={usersTimedOut}/>
+                        {/* <CardList info={filteredCats} usersTimedOut={usersTimedOut}/> */}
+                        <CardList info={filteredCats}/>
                     </ErrorBoundry>
                 </Scroll>
             </div>
         );
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
