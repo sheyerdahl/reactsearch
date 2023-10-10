@@ -1,16 +1,17 @@
 {
   "files": {
     "main.css": "/reactsearch/static/css/main.022bb085.css",
-    "main.js": "/reactsearch/static/js/main.ab9246db.js",
+    "main.js": "/reactsearch/static/js/main.8a17ce0a.js",
     "static/js/787.deba3793.chunk.js": "/reactsearch/static/js/787.deba3793.chunk.js",
+    "service-worker.js": "/reactsearch/service-worker.js",
     "static/media/SEGA.woff": "/reactsearch/static/media/SEGA.47b4bfa94ef243af4a5b.woff",
     "index.html": "/reactsearch/index.html",
     "main.022bb085.css.map": "/reactsearch/static/css/main.022bb085.css.map",
-    "main.ab9246db.js.map": "/reactsearch/static/js/main.ab9246db.js.map",
+    "main.8a17ce0a.js.map": "/reactsearch/static/js/main.8a17ce0a.js.map",
     "787.deba3793.chunk.js.map": "/reactsearch/static/js/787.deba3793.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.022bb085.css",
-    "static/js/main.ab9246db.js"
+    "static/js/main.8a17ce0a.js"
   ]
 }
