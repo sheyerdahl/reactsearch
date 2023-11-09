@@ -14,24 +14,22 @@ jobs:
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       - checkout
-      - run:
-          name: "Build"
-          command: "npm install"
-          command: "npm build"
+      - run: echo "building"
+      - run: npm install
+      - run: npm build
   test:
     docker:
       - image: circleci/node
     steps:
       - checkout
-      - run:
-          name: "Test"
-          command: "npm install"
-          command: "npm test"
+      - run: echo "testing things"
+      - run: npm install
+      - run: npm test
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  workflow:
+  build_test:
     jobs:
       - build
       - test
