@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run: echo "building"
       - run: npm install
-      - run: npm build
+      - run: npm run build
   test:
     docker:
       - image: circleci/node
