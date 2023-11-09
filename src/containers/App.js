@@ -1,12 +1,14 @@
 // import React, {useState, useEffect} from "react";
 import React, { useEffect} from "react";
 import { connect } from "react-redux";
+import "./App.css";
+
 import CardList from "../components/CardList";
 import SearchBox from "../components/SearchBox";
 import Scroll from "../components/Scroll";
 import ErrorBoundry from "../components/ErrorBoundry";
 import Header from "../components/Header";
-import "./App.css";
+import CounterButton from "../components/CounterButton";
 //import {offlineInfo} from "../info.js";
 
 import { setSearchField, requestCats } from "../actions";
@@ -66,6 +68,7 @@ function App(store) {
     return (
             <div className="tc">
                 <Header />
+                <CounterButton color={"red"}/>
                 <SearchBox searchChange={handleSearch}/>
                 <Scroll>
                     <ErrorBoundry>
